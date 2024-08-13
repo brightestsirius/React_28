@@ -1,0 +1,7 @@
+.heading{
+    text-decoration: underline;
+}
+
+.heading--success{
+    color: green;
+}
