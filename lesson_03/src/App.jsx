@@ -1,26 +1,19 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 
-import List from "./components/List/List";
-import User from "./components/User/User";
-import Posts from './components/Posts/Posts'
+import StateExample from "./components/StateExample/StateExample";
+import List from './components/List/List'
 
 export default function App() {
   const [showList, setShowList] = useState(true);
-  const [showUser, setShowUser] = useState(true);
 
-  const handleListRemove = () => setShowList(false);
-
-  const handleUserRemove = () => setShowUser(false);
+  const handleListRemove = () => setShowList(!showList);
 
   return (
     <>
-      {/* <button onClick={handleListRemove}>Remove List</button>
-      {showList && <List />} */}
-
-      {/* <button onClick={handleUserRemove}>Remove user</button>
-      {showUser && <User />} */}
-
-      <Posts />
+      {/* <StateExample /> */}
+      <button onClick={handleListRemove}>Remove List Component</button>
+      
+      {showList && <List />}
     </>
   );
 }

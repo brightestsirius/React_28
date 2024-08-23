@@ -1,89 +1,68 @@
 import React, { useState, useEffect } from "react";
+import './style.sass'
 
-import { list as mockedList } from "./../../mockedData/mockedData";
+import ListItem from "./ListItem";
+
+// useEffect – 3 lifecycle steps 🟢🧡🔴
+// 🟢 component­Did­Mount – borned - useEffect(()=>{}, [])
+// 🧡 component­DidUpdate - useEffect(()=>{}, [VARIABLE FROM STATE])
+
+// 🔴 componentWillUnmount – will dying
 
 export default function List() {
-  const [list, setList] = useState(mockedList);
-  const [user, setUser] = useState({
-    name: `Taras`,
-    age: 100,
-    country: `Ukraine`,
-  });
-  const [intId, setIntId] = useState();
-  const [color, setColor] = useState(`black`);
-  const [bg, setBg] = useState(`white`);
+  const [list, setList] = useState([`cat`, `dog`, `lion`]);
+  const [borderWidth, setBorderWidth] = useState(0);
+  const [borderMyColor, setBorderColor] = useState();
+  const [borderStyle, setBorderStyle] = useState();
 
-  useEffect(() => {
-    console.log(`in useEffect`);
-
-    // setTimeout(() => {
-    //   setList((prevState) => prevState.map((item) => `${item}...`));
-    // }, 1000);
-
-    // setTimeout(() => {
-    //   setList((prevState) => prevState.map((item) => `${item}!`));
-    // }, 1500);
-
-    // setTimeout(() => {
-    //     setUser(prevState => ({...prevState, name: `Lesya`}))
-    // }, 1000)
-
-    // setTimeout(() => {
-    //     setUser(prevState => ({...prevState, age: 20}))
-    // }, 1000)
-
-    const intervalId = setInterval(() => {
-        setList(prevState => prevState.slice(0, -1));
+  useEffect(function(){
+    console.log(`🟢 in 1 useEffect for component­Did­Mount`);
+    
+    const timeoutId = setTimeout(() => {
+        console.log(`in setTimeout`, timeoutId);
+        setList(list.slice(0, -1));
     }, 1000);
-
-    setIntId(intervalId);
-
-    return () => {
-        console.log(`in componentWillUnmout`);
-        clearInterval(intervalId);
-    }
   }, []);
 
   useEffect(() => {
-    !list.length && clearInterval(intId);
+    console.log(`🟢 in 2 useEffect for component­Did­Mount – connection to service`);
+  }, []); 
+
+  useEffect(() => {
+    console.log(`🟢🧡 in useEffect for list`, list);
+
+    if(list.length === 2){
+        setBorderWidth(`1px`);
+        setBorderColor(`orange`);
+    }
+
+    if(list.length === 1){
+        setBorderWidth(`3px`);
+        setBorderColor(`red`);
+    }
   }, [list]);
 
   useEffect(() => {
-    if(list.length<=4) setColor(`orange`);
-    if(list.length<=2) setColor(`red`);
-
-  }, [list]);
+    console.log(`🟢🧡 in useEffect for borderMyColor`, borderMyColor);
+    if(borderMyColor === `red`) setBorderStyle(`dashed`);
+  }, [borderMyColor])
 
   useEffect(() => {
-    if(color === `orange`) setBg(`grey`);
-    if(color === `red`) setBg(`black`);
-  }, [color])
+    console.log(`🟢🧡 in useEffect for borderStyle`, borderStyle);
+  }, [borderStyle])
 
-//   useEffect(() => {
-//     console.log(`in basic useEffect`)
+  const handleRemoveLastItem = () => {
+    setList(list.slice(0, -1))
+  };
 
-//     return () => {
-//         console.log(`in return basic useEffect`)
-//     }
-//   })
-
-  return (
+  return list.length ? (
     <>
-      {list.length ? (
-        <ul style={{color, backgroundColor: bg}}>
-          {list.map((item, index) => (
-            <li key={index}>{item}</li>
-          ))}
-        </ul>
-      ) : null}
-      <hr></hr>
-      <ul>
-        {Object.keys(user).map((key, index) => (
-          <li key={index}>
-            {key}: {user[key]}
-          </li>
+      <ul className="list" style={{borderWidth, borderColor: borderMyColor, borderStyle}}>
+        {list.map((item, index) => (
+          <ListItem key={index} item={item} />
         ))}
       </ul>
+      <button onClick={handleRemoveLastItem}>Remove item</button>
     </>
-  );
+  ) : null;
 }
