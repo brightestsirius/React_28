@@ -1,39 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./style.sass";
 
-export default function Todos() {
-  const [todos, setTodos] = useState([]);
+import TodosForm from "../TodosForm/TodosForm";
+import TodosList from "./../TodosList/TodosList";
 
-  const getTodos = async () => {
-    try {
-      const request = await fetch(
-          `https://6675570ea8d2b4d072efa0bb.mockapi.io/todos`
-        ),
-        response = await request.json();
+export default function Todos({ liftingNewTodoToApp }) {
+  const [newTodo, setNewTodo] = useState({}); // {...}
 
-      setTodos(response);
-    } catch (err) {
-      console.log(err);
-    }
+  const liftedNewTodo = (item) => {
+    //console.log(`in Todos component`, item);
+    //liftingNewTodoToApp(item);
+
+    setNewTodo(item);
   };
 
-  useEffect(() => {
-    getTodos();
-  }, []);
-
-  const getClassName = (item) => {
-    const classes = [];
-    if (item.priority) classes.push(`item--priority`);
-    return classes.join(` `);
-  };
-
-  return todos.length ? (
-    <ul>
-      {todos.map((item) => (
-        <li className={getClassName(item)} key={item.id}>
-          {item.title}
-        </li>
-      ))}
-    </ul>
-  ) : null;
+  return (
+    <>
+      <TodosForm liftingNewTodo={liftedNewTodo} />
+      <TodosList newTodo={newTodo} />
+    </>
+  );
 }
