@@ -13,7 +13,7 @@ export default function Todos() {
 
       setTodos(response);
     } catch (err) {
-      console.log(`err`);
+      console.log(err);
     }
   };
 
