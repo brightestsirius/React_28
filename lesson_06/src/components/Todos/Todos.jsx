@@ -19,7 +19,7 @@ export default function Todos() {
 
   useEffect(() => {
     getTodos();
-  });
+  }, []);
 
   const getClassName = (item) => {
     const classes = [];
