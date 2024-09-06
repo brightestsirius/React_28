@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import service from "./../../services/todos";
 
+import ListItem from "./ListItem";
+
 export default function List() {
   const [list, setList] = useState([]);
 
@@ -22,10 +24,11 @@ export default function List() {
   return list.length ? (
     <ul>
       {list.map((item) => (
-        <li key={item.id}>
-          {item.title}{" "}
-          <button onClick={() => handleItemDelete(item.id)}>Delete</button>
-        </li>
+        <ListItem
+          key={item.id}
+          item={item}
+          handleClick={() => handleItemDelete(item.id)}
+        />
       ))}
     </ul>
   ) : null;
