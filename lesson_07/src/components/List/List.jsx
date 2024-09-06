@@ -14,10 +14,18 @@ export default function List() {
     renderList();
   }, []);
 
+  const handleItemDelete = async (id) => {
+    await service.delete(id);
+    renderList();
+  };
+
   return list.length ? (
     <ul>
       {list.map((item) => (
-        <li key={item.id}>{item.title}</li>
+        <li key={item.id}>
+          {item.title}{" "}
+          <button onClick={() => handleItemDelete(item.id)}>Delete</button>
+        </li>
       ))}
     </ul>
   ) : null;
