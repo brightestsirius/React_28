@@ -1,29 +1,14 @@
-import React, { useState, useEffect } from "react";
-
-import service from "./../../services/todos";
+import React, {memo} from "react";
 
 import ListItem from "./ListItem";
+import useList from "../../hooks/useList";
 
-export default function List() {
-  const [list, setList] = useState([]);
+export default function List({color, filter}) {
+  const { filteredList, handleItemDelete } = useList(filter);
 
-  const renderList = async () => {
-    const response = await service.get();
-    setList(response);
-  };
-
-  useEffect(() => {
-    renderList();
-  }, []);
-
-  const handleItemDelete = async (id) => {
-    await service.delete(id);
-    renderList();
-  };
-
-  return list.length ? (
-    <ul>
-      {list.map((item) => (
+  return filteredList.length ? (
+    <ul style={{color}}>
+      {filteredList.map((item) => (
         <ListItem
           key={item.id}
           item={item}
@@ -32,4 +17,4 @@ export default function List() {
       ))}
     </ul>
   ) : null;
-}
+};
