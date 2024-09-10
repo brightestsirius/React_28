@@ -1,5 +1,5 @@
-import { createContext } from "react";
+import {createContext} from 'react'
 
-const ListColorContext = createContext(null);
+const ListColorContext = createContext(); // {}
 
 export default ListColorContext;

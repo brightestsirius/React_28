@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./style.sass";
 
 import Filter from "./../Filter/Filter";
@@ -8,7 +8,7 @@ import List from "./../List/List";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { DEFAULT_COLOR, LIST_FILTER_ALL } from "../../constants/list";
 
-import ListContext from "./../../contexts/ListContext";
+import ListContext from "../../contexts/ListContext";
 
 export default function Dashboard() {
   const [color, setColor] = useLocalStorage(`color`, DEFAULT_COLOR);

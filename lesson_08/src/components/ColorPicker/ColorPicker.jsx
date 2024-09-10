@@ -1,4 +1,4 @@
-import React, { useContext, memo } from "react";
+import React, { memo, useContext } from "react";
 
 import ListContext from "../../contexts/ListContext";
 

@@ -1,5 +1,5 @@
-import { createContext } from "react";
+import {createContext} from 'react';
 
-const ListFilterContext = createContext(null);
+const ListFilterContext = createContext(); // value={ {} }
 
 export default ListFilterContext;

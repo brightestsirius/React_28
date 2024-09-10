@@ -1,11 +1,11 @@
 import React from "react";
 
-import DashboardReducer from "./components/DashboardReducer/DashboardReducer";
+import ListReducer from "./components/ListReducer/ListReducer";
 
 export default function App() {
   return (
     <>
-      <DashboardReducer />
+      <ListReducer />
     </>
   );
 }

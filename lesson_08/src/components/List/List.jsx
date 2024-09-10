@@ -6,12 +6,12 @@ import useList from "../../hooks/useList";
 import ListContext from "../../contexts/ListContext";
 
 export default function List() {
-  const { color, filter } = useContext(ListContext);
+  const { filter } = useContext(ListContext);
 
   const { filteredList, handleItemDelete } = useList(filter);
 
   return filteredList.length ? (
-    <ul style={{ color }}>
+    <ul>
       {filteredList.map((item) => (
         <ListItem
           key={item.id}

@@ -1,5 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
+
+import ListContext from "../../contexts/ListContext";
 
 export default function Button({ title, handleClick }) {
-  return <button onClick={handleClick}>{title}</button>;
+  const { color } = useContext(ListContext);
+
+  return (
+    <button style={{ color }} onClick={handleClick}>
+      {title}
+    </button>
+  );
 }

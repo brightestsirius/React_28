@@ -1,5 +1,5 @@
 import { createContext } from "react";
 
-const ListContext = createContext(null);
+const ListContext = createContext(); // {}
 
 export default ListContext;
