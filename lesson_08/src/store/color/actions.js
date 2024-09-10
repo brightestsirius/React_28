@@ -1,0 +1,3 @@
+const SET_COLOR_ACTION = `SET_COLOR_ACTION`;
+
+export { SET_COLOR_ACTION };
