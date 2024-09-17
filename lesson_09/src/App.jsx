@@ -1,12 +1,13 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Link } from "react-router-dom";
 
+// 🔴🟢
+
+import Layout from "./pages/Layout";
 import HomeRoute from "./routes/HomeRoute";
 import UsersRoute from "./routes/UsersRoute";
-import UserRoute from "./routes/UserRoute";
+import UserRoute from './routes/UserRoute'
 import ErrorRoute from "./routes/ErrorRoute";
-
-import Layout from "./pages/Layout/Layout";
 
 const router = createBrowserRouter([
   {
@@ -26,14 +27,18 @@ const router = createBrowserRouter([
         path: "/users/:userId",
         element: <UserRoute />,
       },
+      {
+        path: "/users/taras/ukraine",
+        element: <div>Taras from Ukraine</div>,
+      },
+      {
+        path: "/users/:userName/:userCountry",
+        element: <div>userName from userCountry</div>,
+      },
     ],
   },
 ]);
 
 export default function App() {
-  return (
-    <>
-      <RouterProvider router={router} />
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
