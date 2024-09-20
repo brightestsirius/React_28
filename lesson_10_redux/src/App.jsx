@@ -1,13 +1,11 @@
 import React from "react";
 
-import Counter from "./components/Counter/Counter";
-import Users from "./components/Users/Users";
+import Counter from "./comonents/Counter/Counter";
 
 export default function App() {
   return (
-    <div>
+    <>
       <Counter />
-      <Users />
-    </div>
+    </>
   );
 }

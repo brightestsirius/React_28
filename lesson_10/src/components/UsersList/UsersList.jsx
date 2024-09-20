@@ -1,45 +1,40 @@
-import React, { useEffect, useContext } from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import {useSearchParams} from 'react-router-dom'
 
-import service from "../../services/users";
 import AppContext from "../../contexts/AppContext";
-import {
-  SET_USERS_ACTION,
-  SORT_USERS_ACTION,
-  SET_SORT_ACTION
-} from "./../../store/users/actions";
+import { SORT_USERS_ACTION, CHANGE_USER_ACTION, SET_SORT_USERS_ACTION } from "../../store/actions";
 
 export default function UsersList() {
-  const { users, dispatchUsers } = useContext(AppContext);
+  const { users, sortUsers, dispatch } = useContext(AppContext);
 
   const [searchParams] = useSearchParams();
-  const sortUsers = searchParams.get(`sort`);
-
-  const getUsers = async () => {
-    try {
-      const response = await service.get();
-      dispatchUsers({ type: SET_USERS_ACTION, payload: response });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const sortQueryParam = searchParams.get(`sort`);
 
   useEffect(() => {
-    getUsers();
-  }, []);
-
-  useEffect(() => {
-    if(sortUsers){
-        dispatchUsers({ type: SET_SORT_ACTION, payload: sortUsers });
-        dispatchUsers({ type: SORT_USERS_ACTION, payload: sortUsers });
-    }
+    dispatch({ type: SORT_USERS_ACTION });
   }, [users, sortUsers]);
+
+  useEffect(() => {
+    if(sortQueryParam){
+        dispatch({type: SET_SORT_USERS_ACTION, payload: sortQueryParam})
+    }
+  }, [sortQueryParam])
+
+  const handleChangeAdmin = (user) => {
+    dispatch({
+      type: CHANGE_USER_ACTION,
+      payload: { ...user, admin: !user.admin },
+    });
+  };
 
   return users.length ? (
     <ul>
-      {users.map((item) => (
-        <li style={{ color: item.admin ? `crimson` : `` }} key={item.id}>
-          {item.name}
+      {users.map((user) => (
+        <li key={user.id} style={{ color: user.admin ? `crimson` : `` }}>
+          {user.name}{" "}
+          <button onClick={() => handleChangeAdmin(user)}>
+            Change Admin status
+          </button>
         </li>
       ))}
     </ul>

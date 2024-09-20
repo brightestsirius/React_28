@@ -1,6 +1,7 @@
-import React from "react";
+import React from 'react'
 
-import UsersList from "./../components/UsersList/UsersList";
+import UsersList from './../components/UsersList/UsersList'
+import NavigateBtn from '../components/NavigateBtn/NavigateBtn'
 
 export default function UsersRoute() {
   return (
@@ -8,6 +9,7 @@ export default function UsersRoute() {
       <h3>Users Route</h3>
 
       <UsersList />
+      <NavigateBtn title={`Go Home`} path={`/`} />
     </div>
-  );
+  )
 }

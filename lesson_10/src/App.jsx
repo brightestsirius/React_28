@@ -1,5 +1,8 @@
 import React, { useReducer } from "react";
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import AppContext from "./contexts/AppContext";
 
 import Layout from "./pages/Layout";
 import HomeRoute from "./routes/HomeRoute";
@@ -9,29 +12,26 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    errorElement: <div>404 page</div>,
     children: [
       {
-        path: `/`,
+        path: "/",
         element: <HomeRoute />,
       },
       {
-        path: `/users`,
+        path: "/users",
         element: <UsersRoute />,
       },
     ],
   },
 ]);
 
-import AppContext from "./contexts/AppContext";
-
-import { reducer, initArgs } from "./store/users/reducer";
+import { reducer, initArgs } from './store/reducer'
 
 export default function App() {
-  const [stateUsers, dispatchUsers] = useReducer(reducer, initArgs);
+  const [state, dispatch] = useReducer(reducer, initArgs);
 
   return (
-    <AppContext.Provider value={{ ...stateUsers, dispatchUsers }}>
+    <AppContext.Provider value={ { ...state, dispatch } }>
       <RouterProvider router={router} />
     </AppContext.Provider>
   );

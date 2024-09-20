@@ -1,23 +1,20 @@
-import React, { useContext } from "react";
+import React, {useContext} from 'react'
 
-import Select from "./../components/Select/Select";
-import RedirectBtn from "./../components/RedirectBtn/RedirectBtn";
+import SelectUsersSort from './../components/SelectUsersSort/SelectUsersSort'
+import NavigateBtn from './../components/NavigateBtn/NavigateBtn'
 
-import AppContext from "../contexts/AppContext";
+import AppContext from '../contexts/AppContext'
 
 export default function HomeRoute() {
-  const { sortUsers } = useContext(AppContext);
+    const {sortUsers} = useContext(AppContext);
 
   return (
     <div>
-      <h3>Home Route</h3>
+        <h3>Home Route</h3>
 
-      <Select />
-      <br />
-      <RedirectBtn
-        title={"Redirect to Users List"}
-        path={`/users?sort=${sortUsers}`}
-      />
+        <SelectUsersSort />
+        <br /><br />
+        <NavigateBtn title={`Go to User List Route and sort by ${sortUsers}`} path={`/users?sort=${sortUsers}`} />
     </div>
-  );
+  )
 }
