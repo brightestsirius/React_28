@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import "./style.sass";
-
+import service from "../../services/todos";
 import { API, TASK_STATUS } from "./../../constants/tasks";
 
 import Task from "./../Task/Task";
@@ -14,9 +14,7 @@ export default function Tasks() {
 
   const getTasks = async () => {
     try {
-      const request = await fetch(API),
-        response = await request.json();
-
+      const response = await service.get();
       setTasks(response);
     } catch (err) {
       console.log(err);
@@ -37,14 +35,9 @@ export default function Tasks() {
 
   const handleTaskProgress = async (item) => {
     try {
-      const request = await fetch(API + `/${item.id}`, {
-          method: `PUT`,
-          body: JSON.stringify({ ...item, status: TASK_STATUS.PROGRESS }),
-          headers: {
-            "Content-type": "application/json",
-          },
-        }),
-        response = await request.json();
+      const response = await service.put(item.id, {
+        status: TASK_STATUS.PROGRESS,
+      });
 
       setTasks((prevState) =>
         prevState.map((element) => {
@@ -59,14 +52,7 @@ export default function Tasks() {
 
   const handleTaskToDo = async (item) => {
     try {
-      const request = await fetch(API + `/${item.id}`, {
-          method: `PUT`,
-          body: JSON.stringify({ ...item, status: TASK_STATUS.TODO }),
-          headers: {
-            "Content-type": "application/json",
-          },
-        }),
-        response = await request.json();
+      const response = await service.put(item.id, { status: TASK_STATUS.TODO });
 
       setTasks((prevState) =>
         prevState.map((element) => {
@@ -81,14 +67,7 @@ export default function Tasks() {
 
   const handleTaskDone = async (item) => {
     try {
-      const request = await fetch(API + `/${item.id}`, {
-          method: `PUT`,
-          body: JSON.stringify({ ...item, status: TASK_STATUS.DONE }),
-          headers: {
-            "Content-type": "application/json",
-          },
-        }),
-        response = await request.json();
+      const response = await service.put(item.id, { status: TASK_STATUS.DONE });
 
       setTasks((prevState) =>
         prevState.map((element) => {
@@ -103,9 +82,7 @@ export default function Tasks() {
 
   const handleTaskArchive = async (item) => {
     try {
-      await fetch(API + `/${item.id}`, {
-        method: `DELETE`,
-      });
+      await service.delete(item.id);
 
       setTasks((prevState) =>
         prevState.filter((element) => element.id !== item.id)
