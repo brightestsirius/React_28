@@ -33,30 +33,9 @@ export default function Tasks() {
     setTasksDone(tasks.filter((item) => item.status === TASK_STATUS.DONE));
   }, [tasks]);
 
-  const handleTaskProgress = async (item) => {
+  const handleTaskStatus = async (status, item) => {
     try {
-      await service.put(item.id, {
-        status: TASK_STATUS.PROGRESS,
-      });
-
-      getTasks();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleTaskToDo = async (item) => {
-    try {
-      await service.put(item.id, { status: TASK_STATUS.TODO });
-      getTasks();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleTaskDone = async (item) => {
-    try {
-      await service.put(item.id, { status: TASK_STATUS.DONE });
+      await service.put(item.id, { status });
       getTasks();
     } catch (err) {
       console.log(err);
@@ -76,14 +55,19 @@ export default function Tasks() {
     {
       title: "To Do",
       tasks: tasksToDo,
-      btns: [{ title: `In progress`, action: handleTaskProgress }],
+      btns: [
+        {
+          title: `In progress`,
+          action: handleTaskStatus.bind({}, TASK_STATUS.PROGRESS),
+        },
+      ],
     },
     {
       title: "In Progress",
       tasks: tasksProgress,
       btns: [
-        { title: `To do`, action: handleTaskToDo },
-        { title: `Done`, action: handleTaskDone },
+        { title: `To do`, action: handleTaskStatus.bind({}, TASK_STATUS.TODO) },
+        { title: `Done`, action: handleTaskStatus.bind({}, TASK_STATUS.DONE) },
       ],
     },
     {
