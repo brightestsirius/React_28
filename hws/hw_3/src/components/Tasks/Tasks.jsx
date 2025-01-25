@@ -35,16 +35,11 @@ export default function Tasks() {
 
   const handleTaskProgress = async (item) => {
     try {
-      const response = await service.put(item.id, {
+      await service.put(item.id, {
         status: TASK_STATUS.PROGRESS,
       });
 
-      setTasks((prevState) =>
-        prevState.map((element) => {
-          if (element.id === response.id) element = response;
-          return element;
-        })
-      );
+      getTasks();
     } catch (err) {
       console.log(err);
     }
@@ -52,14 +47,8 @@ export default function Tasks() {
 
   const handleTaskToDo = async (item) => {
     try {
-      const response = await service.put(item.id, { status: TASK_STATUS.TODO });
-
-      setTasks((prevState) =>
-        prevState.map((element) => {
-          if (element.id === response.id) element = response;
-          return element;
-        })
-      );
+      await service.put(item.id, { status: TASK_STATUS.TODO });
+      getTasks();
     } catch (err) {
       console.log(err);
     }
@@ -67,14 +56,8 @@ export default function Tasks() {
 
   const handleTaskDone = async (item) => {
     try {
-      const response = await service.put(item.id, { status: TASK_STATUS.DONE });
-
-      setTasks((prevState) =>
-        prevState.map((element) => {
-          if (element.id === response.id) element = response;
-          return element;
-        })
-      );
+      await service.put(item.id, { status: TASK_STATUS.DONE });
+      getTasks();
     } catch (err) {
       console.log(err);
     }
@@ -83,10 +66,7 @@ export default function Tasks() {
   const handleTaskArchive = async (item) => {
     try {
       await service.delete(item.id);
-
-      setTasks((prevState) =>
-        prevState.filter((element) => element.id !== item.id)
-      );
+      getTasks();
     } catch (err) {
       console.log(err);
     }
