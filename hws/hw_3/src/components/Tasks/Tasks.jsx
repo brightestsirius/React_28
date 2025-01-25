@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import "./style.sass";
 import service from "../../services/todos";
-import { API, TASK_STATUS } from "./../../constants/tasks";
+import { TASK_STATUS } from "./../../constants/tasks";
 
 import Task from "./../Task/Task";
 
